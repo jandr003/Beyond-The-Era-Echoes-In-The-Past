@@ -1,4 +1,4 @@
 .vscode/
 .DS_Store
 *.log
-desktop.ini
+server.err.log
