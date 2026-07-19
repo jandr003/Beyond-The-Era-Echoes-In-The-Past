@@ -1,0 +1,350 @@
+﻿<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:,">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Beyond the Era</title>
+    <link rel="stylesheet" href="src/styles/main.css?v=11" />
+  </head>
+  <style>
+  /* ── Base reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .menu-title {
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+  }
+  .menu-title img {
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+  #butterflyCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    image-rendering: pixelated;
+  }
+
+  /* Google Font */
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+</style>
+  <body>
+
+    <!-- ══ LOADING SCREEN ══ -->
+    <div id="loadingScreen" class="loading-screen is-hidden" aria-label="Loading">
+      <video class="ls-video" autoplay muted loop playsinline>
+        <source src="assets/ui/menu/memories-of-himmel-frieren.3840x2160.mp4" type="video/mp4" />
+      </video>
+      <div class="ls-shade"></div>
+      <div class="ls-content">
+        <p id="ls-status" class="ls-status">Loading assets...</p>
+        <div class="ls-bar-wrap">
+          <svg class="ls-ore ls-ore--left" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="10,1 18,5.5 18,14.5 10,19 2,14.5 2,5.5" fill="#c9a8ff" stroke="#e8dfc8" stroke-width="1.5"/>
+            <polygon points="10,5 15,7.5 15,12.5 10,15 5,12.5 5,7.5" fill="#7b9fff"/>
+            <line x1="10" y1="1" x2="10" y2="19" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+            <line x1="18" y1="5.5" x2="2" y2="14.5" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+            <line x1="2" y1="5.5" x2="18" y2="14.5" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+          </svg>
+          <div class="ls-bar-track">
+            <div id="ls-fill" class="ls-fill"></div>
+          </div>
+          <svg id="ls-ore" class="ls-ore ls-ore--right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="10,1 18,5.5 18,14.5 10,19 2,14.5 2,5.5" fill="#c9a8ff" stroke="#e8dfc8" stroke-width="1.5"/>
+            <polygon points="10,5 15,7.5 15,12.5 10,15 5,12.5 5,7.5" fill="#7b9fff"/>
+            <line x1="10" y1="1" x2="10" y2="19" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+            <line x1="18" y1="5.5" x2="2" y2="14.5" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+            <line x1="2" y1="5.5" x2="18" y2="14.5" stroke="#e8dfc8" stroke-width="0.6" opacity="0.35"/>
+          </svg>
+          <span id="ls-percent" class="ls-percent">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MAIN APP SHELL ══ -->
+    <main id="appShell">
+
+      <!-- Main Menu -->
+      <section id="mainMenu" class="main-menu" aria-label="Main menu">
+        <video class="menu-video" autoplay muted loop playsinline>
+          <source src="assets/ui/menu/memories-of-himmel-frieren.3840x2160.mp4" type="video/mp4" />
+        </video>
+        <div class="menu-shade"></div>
+
+        <div class="menu-title">
+          <img src="assets/ui/menu/GameFinalTitle.png" alt="Game Title" />
+          <canvas id="butterflyCanvas"></canvas>
+        </div>
+
+        <nav class="menu-actions" aria-label="Game actions">
+          <button class="menu-link" type="button" data-action="start">Begin Journey</button>
+          <button id="loadJourneyButton" class="menu-link is-hidden" type="button" data-action="load">Load Journey</button>
+          <button class="menu-link" type="button" data-action="settings">Settings</button>
+          <button class="menu-link" type="button" data-action="credits">Credits</button>
+          <button class="menu-link" type="button" data-action="exit">Exit</button>
+        </nav>
+
+        <div class="mm-credit">
+          Developed by John Andrew | <a href="https://github.com/jandr003" target="_blank" rel="noopener noreferrer">github.com/jandr003</a>
+        </div>
+        
+      </section>
+
+      <!-- ══ ECHO SELECT SCREEN ══ -->
+      <section id="echoSelectScreen" class="is-hidden" aria-label="Echo selection">
+        <button class="es-back-btn" id="esBackBtn">&#8592; Back</button>
+        <h1 class="es-title">Which Echo Will You Follow?</h1>
+
+        <div class="es-banners" role="list">
+
+          <!-- AZURE / Frozen Bloom -->
+          <div class="es-banner-wrap" data-echo="azure" tabindex="0" role="listitem" aria-label="Azure Echo — Frozen Bloom">
+            <div class="es-banner-glow"></div>
+            <svg class="es-banner" viewBox="0 0 120 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="az-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0a1f40"/>
+                  <stop offset="100%" stop-color="#040e22"/>
+                </linearGradient>
+                <filter id="az-glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M10,0 H110 V230 L60,270 L10,230 Z" fill="url(#az-grad)" stroke="#2a5080" stroke-width="1.5"/>
+              <rect x="4" y="0" width="112" height="8" fill="#1a3a60"/>
+              <g fill="#4ab0f0" opacity="0.8">
+                <ellipse cx="25" cy="278" rx="3" ry="5"/>
+                <ellipse cx="40" cy="282" rx="2.5" ry="4"/>
+                <ellipse cx="60" cy="285" rx="3.5" ry="6"/>
+                <ellipse cx="80" cy="282" rx="2.5" ry="4"/>
+                <ellipse cx="95" cy="278" rx="3" ry="5"/>
+              </g>
+              <g filter="url(#az-glow)" stroke="#8dd8ff" stroke-width="1.8" fill="none" transform="translate(60,120)">
+                <line x1="0" y1="-36" x2="0" y2="36"/>
+                <line x1="-36" y1="0" x2="36" y2="0"/>
+                <line x1="-25" y1="-25" x2="25" y2="25"/>
+                <line x1="25" y1="-25" x2="-25" y2="25"/>
+                <line x1="-10" y1="-26" x2="0" y2="-36"/><line x1="10" y1="-26" x2="0" y2="-36"/>
+                <line x1="-10" y1="26" x2="0" y2="36"/><line x1="10" y1="26" x2="0" y2="36"/>
+                <line x1="-26" y1="-10" x2="-36" y2="0"/><line x1="-26" y1="10" x2="-36" y2="0"/>
+                <line x1="26" y1="-10" x2="36" y2="0"/><line x1="26" y1="10" x2="36" y2="0"/>
+                <circle cx="0" cy="0" r="8" fill="#1a5080" stroke="#8dd8ff" stroke-width="1.5"/>
+                <circle cx="0" cy="0" r="3" fill="#8dd8ff"/>
+              </g>
+              <path d="M18,20 H102" stroke="#1e4070" stroke-width="1" opacity="0.6"/>
+              <path d="M18,220 H102" stroke="#1e4070" stroke-width="1" opacity="0.6"/>
+            </svg>
+            <span class="es-banner-label">Frozen Bloom</span>
+          </div>
+
+          <!-- CRIMSON / Ember Vow -->
+          <div class="es-banner-wrap" data-echo="crimson" tabindex="0" role="listitem" aria-label="Crimson Echo — Ember Vow">
+            <div class="es-banner-glow"></div>
+            <svg class="es-banner" viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:20px">
+              <defs>
+                <linearGradient id="cr-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3a0a0a"/>
+                  <stop offset="100%" stop-color="#1e0404"/>
+                </linearGradient>
+                <filter id="cr-glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M10,0 H110 V220 L60,260 L10,220 Z" fill="url(#cr-grad)" stroke="#6a1a1a" stroke-width="1.5"/>
+              <rect x="4" y="0" width="112" height="8" fill="#5a1010"/>
+              <g fill="#e05040" opacity="0.8">
+                <ellipse cx="25" cy="268" rx="3" ry="5"/>
+                <ellipse cx="40" cy="272" rx="2.5" ry="4"/>
+                <ellipse cx="60" cy="275" rx="3.5" ry="6"/>
+                <ellipse cx="80" cy="272" rx="2.5" ry="4"/>
+                <ellipse cx="95" cy="268" rx="3" ry="5"/>
+              </g>
+              <g filter="url(#cr-glow)" transform="translate(60,108)">
+                <circle cx="0" cy="0" r="28" fill="none" stroke="#c04030" stroke-width="1.5"/>
+                <circle cx="0" cy="0" r="18" fill="none" stroke="#e06050" stroke-width="1"/>
+                <g fill="#c04030" opacity="0.7">
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(0)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(45)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(90)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(135)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(180)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(225)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(270)"/>
+                  <ellipse cx="0" cy="-24" rx="5" ry="8" transform="rotate(315)"/>
+                </g>
+                <circle cx="0" cy="0" r="8" fill="#7a1010" stroke="#e06050" stroke-width="1.2"/>
+              </g>
+            </svg>
+            <span class="es-banner-label">Ember Vow</span>
+          </div>
+
+          <!-- FLOWER YELLOW / Golden Rite -->
+          <div class="es-banner-wrap" data-echo="flowerYellow" tabindex="0" role="listitem" aria-label="Flower Yellow Echo — Golden Rite">
+            <div class="es-banner-glow"></div>
+            <svg class="es-banner" viewBox="0 0 120 295" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:5px">
+              <defs>
+                <linearGradient id="fy-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2a2000"/>
+                  <stop offset="100%" stop-color="#150f00"/>
+                </linearGradient>
+                <filter id="fy-glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M10,0 H110 V235 L60,275 L10,235 Z" fill="url(#fy-grad)" stroke="#5a4800" stroke-width="1.5"/>
+              <rect x="4" y="0" width="112" height="8" fill="#4a3800"/>
+              <g fill="#c0a000" opacity="0.8">
+                <ellipse cx="25" cy="283" rx="3" ry="5"/>
+                <ellipse cx="40" cy="287" rx="2.5" ry="4"/>
+                <ellipse cx="60" cy="290" rx="3.5" ry="6"/>
+                <ellipse cx="80" cy="287" rx="2.5" ry="4"/>
+                <ellipse cx="95" cy="283" rx="3" ry="5"/>
+              </g>
+              <g filter="url(#fy-glow)" transform="translate(60,115)" fill="none" stroke="#d4a800" stroke-width="1.5">
+                <ellipse cx="0" cy="-15" rx="12" ry="22"/>
+                <ellipse cx="-14" cy="-5" rx="10" ry="18" transform="rotate(-25)"/>
+                <ellipse cx="14" cy="-5" rx="10" ry="18" transform="rotate(25)"/>
+                <ellipse cx="-22" cy="10" rx="8" ry="14" transform="rotate(-45)"/>
+                <ellipse cx="22" cy="10" rx="8" ry="14" transform="rotate(45)"/>
+                <line x1="0" y1="12" x2="0" y2="35"/>
+                <path d="M0,28 Q-10,22 -16,28" stroke-width="1"/>
+                <path d="M0,28 Q10,22 16,28" stroke-width="1"/>
+              </g>
+            </svg>
+            <span class="es-banner-label">Golden Rite</span>
+          </div>
+
+          <!-- MEDIVE / Verdant Oath -->
+          <div class="es-banner-wrap" data-echo="medive" tabindex="0" role="listitem" aria-label="Medive Echo — Verdant Oath">
+            <div class="es-banner-glow"></div>
+            <svg class="es-banner" viewBox="0 0 120 285" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:15px">
+              <defs>
+                <linearGradient id="me-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#051a0f"/>
+                  <stop offset="100%" stop-color="#020d07"/>
+                </linearGradient>
+                <filter id="me-glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M10,0 H110 V225 L60,265 L10,225 Z" fill="url(#me-grad)" stroke="#0a3a1a" stroke-width="1.5"/>
+              <rect x="4" y="0" width="112" height="8" fill="#0a2a14"/>
+              <g fill="#40c060" opacity="0.8">
+                <ellipse cx="25" cy="273" rx="3" ry="5"/>
+                <ellipse cx="40" cy="277" rx="2.5" ry="4"/>
+                <ellipse cx="60" cy="280" rx="3.5" ry="6"/>
+                <ellipse cx="80" cy="277" rx="2.5" ry="4"/>
+                <ellipse cx="95" cy="273" rx="3" ry="5"/>
+              </g>
+              <g filter="url(#me-glow)" transform="translate(60,108)" stroke="#50d870" stroke-width="1.5" fill="none">
+                <path d="M0,-30 C-20,-20 -25,0 -15,20 C-5,35 5,35 15,20 C25,0 20,-20 0,-30Z"/>
+                <path d="M0,-30 C0,-10 0,10 0,30"/>
+                <path d="M-8,5 C-15,-2 -20,-8 -15,-18"/>
+                <path d="M8,5 C15,-2 20,-8 15,-18"/>
+                <path d="M-15,-5 Q-30,-15 -22,-28" stroke-width="1"/>
+                <path d="M15,-5 Q30,-15 22,-28" stroke-width="1"/>
+              </g>
+            </svg>
+            <span class="es-banner-label">Verdant Oath</span>
+          </div>
+
+          <!-- RIBBON / Pale Thorn -->
+          <div class="es-banner-wrap" data-echo="ribbon" tabindex="0" role="listitem" aria-label="Ribbon Echo — Pale Thorn">
+            <div class="es-banner-glow"></div>
+            <svg class="es-banner" viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:20px">
+              <defs>
+                <linearGradient id="rb-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1a0830"/>
+                  <stop offset="100%" stop-color="#0d0418"/>
+                </linearGradient>
+                <filter id="rb-glow"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M10,0 H110 V220 L60,260 L10,220 Z" fill="url(#rb-grad)" stroke="#4a1870" stroke-width="1.5"/>
+              <rect x="4" y="0" width="112" height="8" fill="#3a1060"/>
+              <g fill="#b060f0" opacity="0.8">
+                <ellipse cx="25" cy="268" rx="3" ry="5"/>
+                <ellipse cx="40" cy="272" rx="2.5" ry="4"/>
+                <ellipse cx="60" cy="275" rx="3.5" ry="6"/>
+                <ellipse cx="80" cy="272" rx="2.5" ry="4"/>
+                <ellipse cx="95" cy="268" rx="3" ry="5"/>
+              </g>
+              <g filter="url(#rb-glow)" transform="translate(60,108)" stroke="#c080ff" stroke-width="1.5" fill="none">
+                <ellipse cx="0" cy="-18" rx="10" ry="20"/>
+                <ellipse cx="-16" cy="-8" rx="9" ry="18" transform="rotate(-30)"/>
+                <ellipse cx="16" cy="-8" rx="9" ry="18" transform="rotate(30)"/>
+                <ellipse cx="-26" cy="8" rx="7" ry="14" transform="rotate(-55)"/>
+                <ellipse cx="26" cy="8" rx="7" ry="14" transform="rotate(55)"/>
+                <path d="M-20,18 Q0,8 20,18" stroke-width="1.2"/>
+                <line x1="0" y1="-38" x2="0" y2="22"/>
+              </g>
+            </svg>
+            <span class="es-banner-label">Pale Thorn</span>
+          </div>
+
+        </div>
+
+        <p class="es-hint">Click a banner to meet its companions</p>
+      </section>
+
+      <!-- Game View -->
+      <section id="gameView" class="game-view is-hidden" aria-label="Game view">
+        <canvas id="gameCanvas" width="1024" height="768"></canvas>
+
+        <aside class="status-panel">
+          <div id="portraitSlot" class="portrait-slot">Portrait</div>
+          <div class="status-copy">
+            <strong id="selectedCharName">Frieren</strong>
+            <span>HP 320 / 320</span>
+            <span>MP 168 / 168</span>
+          </div>
+        </aside>
+
+        <aside class="objective-panel">
+          <strong>Current Objective</strong>
+          <span>Head to Auberst on the northern plateau.</span>
+        </aside>
+
+        <aside class="minimap-panel">
+          <span>Map</span>
+          <canvas id="miniMapCanvas" width="180" height="150"></canvas>
+        </aside>
+
+        <button id="backToMenuButton" class="back-button" type="button" tabindex="-1">Menu</button>
+      </section>
+
+    </main>
+
+    <!-- Dialogs -->
+    <dialog id="optionsDialog" class="menu-dialog">
+      <form>
+        <h2>Options</h2>
+        <p>Settings will be added later.</p>
+        <button class="dialog-button" type="button">Close</button>
+      </form>
+    </dialog>
+
+    <dialog id="creditsDialog" class="menu-dialog">
+      <form>
+        <h2>Credits</h2>
+        <p>Art, music, and story direction for Beyond The Era.</p>
+        <button class="dialog-button" type="button">Close</button>
+      </form>
+    </dialog>
+
+    <dialog id="exitDialog" class="menu-dialog">
+      <form>
+        <h2>Exit Game</h2>
+        <p>Browser games cannot close the tab directly. Return to your desktop or close this tab when you are done.</p>
+        <button class="dialog-button" type="button">Close</button>
+      </form>
+    </dialog>
+
+    <!-- My External scripts -->
+    <script type="module" src="LoadingScreen.js?v=3"></script>
+    <script type="module" src="CharacterSelection.js?v=14"></script>
+    <script type="module" src="src/world/CharacterList.js?v=12"></script>
+    <script type="module" src="CharacterConfirm.js?v=3"></script>
+    <script type="module" src="src/beyondTheEra.js?v=11"></script>
+
+  </body>
+</html>
