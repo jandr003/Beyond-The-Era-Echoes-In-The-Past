@@ -6,18 +6,24 @@ A fan-made pixel RPG inspired by *Frieren: Beyond Journey's End*.
 
 **Beyond The Era: Echoes in the Past** is a fan-made pixel RPG focused on pixel art, character animations, exploration, and RPG-style gameplay.
 
-This project was created to recreate the world and atmosphere inspired by *Frieren: Beyond Journey's End* while exploring game design, pixel art, UI design, and animation.
+The project was created to explore game development, pixel art, UI design, animation, and RPG mechanics while recreating a world and atmosphere inspired by *Frieren: Beyond Journey's End*.
 
 ## Features
 
-* Character selection
-* Pixel art animations
-* RPG-style interface
-* Character and equipment system
+* Character Selection
+* Pixel Art Animations
+* RPG-Style Interface
+* Character and Equipment System
 * Exploration
-* Battle mechanics
+* Battle Mechanics
 
-## Disclaimer
+## 📌 Project Status
+
+**Current Status: ⏸️ On Hold**
+
+Development of the project is currently on hold. The project may be continued and further developed in the future.
+
+## ⚠️ Disclaimer
 
 This is a fan-made project inspired by *Frieren: Beyond Journey's End*.
 
