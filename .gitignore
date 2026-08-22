@@ -1,4 +1,14 @@
+# Editor
 .vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
 *.log
 server.err.log
+
+# Env vars (if any API keys)
+.env
