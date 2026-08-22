@@ -537,8 +537,7 @@ button, input { font: inherit; }
   letter-spacing: 0.04em;
 }
 
-/* ---------- Doorway placement ---------- */
-
+/* Doorway placement */
 .cs-banner-doorway {
   position: absolute;
   top: -10%;
@@ -600,8 +599,7 @@ button, input { font: inherit; }
   outline: none;
 }
 
-/* ---------- Banner art + ambient glow ---------- */
-
+/* Banner art + ambient glow */
 .cs-card-banner {
   position: relative;
   z-index: 0;
