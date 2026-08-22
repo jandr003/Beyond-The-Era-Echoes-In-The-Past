@@ -314,8 +314,6 @@ button, input { font: inherit; }
   padding: 0 16px; 
 }
 
-/* ✅ #butterflyCanvas — handled na ng inline style sa index.html */
-
 @media (max-width: 720px) {
   .menu-title { 
     margin-top: -40px;
@@ -364,7 +362,7 @@ button, input { font: inherit; }
   }
 }
 
-/* ── Loading Screen ─────────────────────────────────── */
+ /* Loading Screen */
 .loading-screen {
   position: fixed;
   inset: 0;
@@ -489,7 +487,7 @@ button, input { font: inherit; }
   50%       { opacity: 0.3; }
 }
 
-/* ── Character Selection ─────────────────────────────── */
+/* Character Selection */
 #charSelectScreen {
   position: fixed;
   inset: 0;
@@ -745,7 +743,6 @@ button, input { font: inherit; }
   will-change: opacity, transform;
 }
 
-/* ✅ SHOW NAME WHEN THIS CLASS IS ADDED */
 .cs-banner-name.cs-name--visible {
   opacity: 1 !important;
   animation: cs-name-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -760,7 +757,7 @@ button, input { font: inherit; }
   transition: opacity 180ms ease;
 }
 
-/* ── Banner Unfurl Animation ── */
+/* Banner Unfurl Animation */
 @keyframes cs-banner-unfurl {
   0% {
     transform: rotateX(90deg) scaleY(0.8);
@@ -799,11 +796,9 @@ button, input { font: inherit; }
   }
 }
 
-
 /* CHARACTER LIST SCREEN (cl-*)
-   – Idinagdag para sa CharacterList.js component
-   – 100% compatible, walang conflict sa existing styles*/
-
+   - Styles for the CharacterList.js component.
+   - Designed to work with the existing styles. */
 .cl-screen {
   position: fixed;
   inset: 0;
@@ -814,7 +809,7 @@ button, input { font: inherit; }
   flex-direction: column;
   overflow: hidden;
   isolation: isolate;
-  --accent: #c9a15a;                   /* fallback, JS overrides this */
+  --accent: #c9a15a;                 
   animation: cl-screen-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -2190,11 +2185,10 @@ video.cl-bg-inactive {
   transform: translateY(0);
 }
 
-/* ── cinematic step ── */
 .char-confirm-step--cinematic {
   gap: 22px;
   padding: 60px 70px;
-  position: relative;   /* kailangan para sa corner ornaments */
+  position: relative;  
 }
  
 .char-confirm-step--cinematic.is-fading {
@@ -2216,7 +2210,7 @@ video.cl-bg-inactive {
 .char-confirm-echo {
   font-family: 'Press Start 2P';
   font-style: italic;
-  font-size: 22px;         /* dating 16px */
+  font-size: 22px;       
   color: var(--accent);
   text-shadow: 0 0 14px var(--accent);
   letter-spacing: 0.5px;
