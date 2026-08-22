@@ -1,67 +1,32 @@
-/* ============================================================
-   dialogueBox.js — NPC dialogue box (Genshin-style layout)
-   ------------------------------------------------------------
-   Gamit: i-import at tawagin ang initDialogueBox(stageEl, options)
-   Awtomatikong nakikinig ito sa 'npc-interact' event na dini-
-   dispatch na ng playerRoom.js kapag pinindot ang "E" habang
-   nasa loob ng interaction zone.
-
+/* dialogueBox.js — NPC dialogue box
+   Gamit: i-import at tawagin ang initDialogueBox(stageEl, options).
+   Nakikinig ito sa 'npc-interact' event mula sa playerRoom.js
+   kapag pinindot ang "E" habang nasa interaction zone.
    Options:
-     speakerName   — pangalan ng NPC (halimbawa: "John Andrew")
-     speakerTitle  — (optional) maliit na title/role sa baba ng
-                      pangalan (halimbawa: "Developer", "Merchant")
-     lines         — array ng dialogue text, isang linya bawat E/click
-     portraitSrc   — (optional) URL ng portrait image ng NPC
-     choices       — (optional) array ng { text, highlight?: bool }
-                      ipinapakita sa itaas ng panel habang bukas
-                      ang dialogue box
-     onChoiceSelect — (optional) callback(text, index) tuwing may
-                      pinindot na choice
-
-   Kontrol:
-   - Pindutin ang E o i-click ang text panel para sumulong sa
-     susunod na linya.
-   - Kapag naubos na ang lines, awtomatikong nagsasara ang box.
-   - Pag-click sa isang choice ay nagdi-dispatch ng
-     'dialogue-choice-selected' event (detail: { text, index })
-     bukod pa sa pagtawag sa onChoiceSelect kung ibinigay.
-
-   FIXES/UPDATES sa bersyong ito:
-   - Idinagdag ang Google Font na "Press Start 2P" (pixel font),
-     kasama ang fallback font kung sakaling hindi ma-load.
-   - Na-adjust ang font sizes/line-height dahil mas malaki at
-     mas makapal ang hugis ng Press Start 2P kumpara sa normal
-     na sans-serif — kung hindi ito babaguhin, aapaw/mag-o-overlap
-     ang text sa dialogue box.
-   - Naitama ang multiple-instance bug: dati, tuwing tinatawag
-     at 'npc-interact' listener sa window kahit hindi pa na-
-     re-remove ang mga dati — nagdudulot ito ng "double advance"
-     o paulit-ulit na pagbukas kapag tumawag ka ng ilang beses.
-     Ngayon, kada instance ay may sarili itong listener na
-     naaalis nang tama sa destroy(), at ang mismong DOM element
-     (root) ang ginagamit bilang key para maiwasang magkaroon ng
-     duplicate listeners kapag same stageEl ang ginamit.
-   - Naitama ang mismatch: hindi na kailangang i-check ulit ang
-     e.key.toLowerCase() === 'e' nang hiwalay — pinanatili ito
-     pero ginawang mas malinaw at ligtas gamit ang early return.
-   - Idinagdag ang pointer-events guard para hindi ma-trigger ang
-     advance() kapag naka-focus sa isang input/textarea sa page
-     (kung meron man sa parehong stage).
-   - BAGONG LAYOUT: ang .dlgbox-panel ay sumasakop na ngayon sa
-     BUONG WIDTH ng screen (full-width bottom bar), kagaya ng
-     karaniwang VN/RPG dialogue bar. Ang pangalan (at optional
-     title sa baba nito) ay naka-CENTER na sa itaas ng panel
-     bilang isang nakalutang na badge, sa halip na naka-left
-     lang dati. Ang mga choices naman ay lumipat sa itaas ng
-     panel (floating sa kanang bahagi) para hindi ito ma-cover
-     ng bagong full-width na panel.
-   - NAME BADGE DISABLED: sa kahilingan, permanenteng naka-off
-     na ngayon ang name badge (hindi na ipinapakita ang pangalan
-     ng NPC sa itaas ng dialogue box), kahit anong ipasa sa
-     `speakerName`/`speakerTitle`. Kung gusto mo itong ibalik,
-     tingnan ang `SHOW_NAME_BADGE` flag sa ibaba.
-   ============================================================ */
-
+     speakerName   — NPC name
+     speakerTitle  — optional title/role
+     lines         — dialogue lines, one line per E/click
+     portraitSrc   — optional NPC portrait
+     choices       — optional array of choices
+     onChoiceSelect — optional callback(text, index)
+   Controls:
+   - Press E or click the text panel to show the next line.
+   - The box closes when all lines are finished.
+   - Clicking a choice dispatches 'dialogue-choice-selected'
+     with { text, index } and also calls onChoiceSelect if provided.
+   Updates:
+   - Added "Press Start 2P" with a fallback font.
+   - Adjusted font size and line height to fit the pixel font.
+   - Fixed multiple instances by giving each instance its own
+     event listener and removing it properly in destroy().
+   - Prevented duplicate listeners when the same stageEl is reused.
+   - Simplified the E key check with an early return.
+   - Added a guard so E/click does not advance dialogue when an
+     input or textarea is focused.
+   - Updated the layout to use a full-width bottom dialogue bar.
+   - Choices are placed above the panel on the right side.
+   - Name badge is disabled by default. Set SHOW_NAME_BADGE
+     below to enable it again  */
 const STYLE_ID = 'dlgbox-styles';
 const FONT_LINK_ID = 'dlgbox-font-press-start-2p';
 
