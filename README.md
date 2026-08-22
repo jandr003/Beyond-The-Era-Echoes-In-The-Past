@@ -21,7 +21,7 @@ The project was created to explore game development, pixel art, UI design, anima
 
 **Current Status: ⏸️ On Hold**
 
-Development of the project is currently on hold. The project may be continued and further developed in the future.
+Development is currently on hold and the project is not actively being worked on at this time. Further development will resume once the project is ready to move forward
 
 ## ⚠️ Disclaimer
 
