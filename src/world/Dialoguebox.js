@@ -296,29 +296,11 @@ const lines = options.npcLines ?? options.lines ?? [];
       return;
     }
     textEl.textContent = lines[currentIndex];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     root.style.display = 'block';
   }
 
   function open() {
-    if (isOpen) return; // iwas double-open kapag paulit-ulit ang 'npc-interact'
+    if (isOpen) return;
     isOpen = true;
     currentIndex = 0;
     showLine();
@@ -337,7 +319,7 @@ const lines = options.npcLines ?? options.lines ?? [];
     window.dispatchEvent(new CustomEvent('dialogue-closed'));
   }
 
-  // ---------- Input ----------
+  //Input 
   function isTypingInField() {
     const el = document.activeElement;
     if (!el) return false;
@@ -359,8 +341,6 @@ const lines = options.npcLines ?? options.lines ?? [];
 
   panel.addEventListener('click', onPanelClick);
   window.addEventListener('keydown', onKeyDown);
-
-  // ---------- Kinokonekta sa 'npc-interact' na dini-dispatch ng playerRoom.js ----------
   function onNpcInteract() {
     open();
   }
