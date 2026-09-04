@@ -1386,7 +1386,7 @@ video.cl-bg-inactive {
   transform: translateX(15px); 
 }
 
-/* ── SELECTED CHARACTER INFO PANEL ── */
+/* SELECTED CHARACTER INFO PANEL */
 .cl-selected-info {
   flex-shrink: 0;
   max-width: none;
